@@ -1,0 +1,3 @@
+Mus_musculus                10
+Homo_sapiens                70000
+Balaenoptera_musculus       120000000		
