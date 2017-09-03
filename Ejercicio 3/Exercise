@@ -1,0 +1,178 @@
+## Instalar libreria APE
+
+install.packages("ape")
+
+## Abro la libreria APE
+
+library(ape)
+
+## Exercise 1, build the tree with 10 tips
+
+tree1<-rtree(n=10)
+plot(tree1)
+
+
+class(tree1)
+
+str(tree1)
+
+#Extract the branch length of the tree
+
+tree1$edge.length
+
+#Put the branch length values in the vector V1
+
+v1<-tree1$edge.length
+
+#Delete the branch length and plot
+
+tree1$edge.length <- NULL
+
+
+plot(tree1)
+
+#####Giving new branch lengths to the tree
+
+#To know the number of edges
+
+length(
+  tree1$edge.length
+  
+)
+
+plot.phylo(tree1)
+
+# Knowing the number of edges, create a vector with the number of edges
+
+newlength<-runif(n=18, min=0, max=10)
+
+newlength
+
+tree1$edge.length<-newlength
+
+str(tree1)
+
+plot.phylo(tree1)
+
+
+#####
+##### Ejercicio 2
+#####
+
+#Tree with 5 tips
+
+tree2<-rtree(5)
+
+print(tree2)
+
+plot(tree2)
+
+class(tree2)
+
+#Doesn't work
+
+removeClass(tree2)
+
+#Doesn't work
+
+class(tree2)<- NULL 
+
+#It works!!!
+
+class(tree2)
+
+#Plot and print
+
+print(tree2)
+
+plot(tree2)
+
+#The class of the object change to list, print function read the tree like a 
+#list while plot function don't recognize the format
+
+#Restart the Tree class
+class(tree2)<-"phylo"
+
+#Build a tree "Multiphylo"
+
+miarbolmultiphylo1<-list()
+
+miarbolmultiphylo1[[1]]<-tree1
+miarbolmultiphylo1[[2]]<-tree2
+ 
+class(miarbolmultiphylo1)<-"Multiphylo"
+
+print(miarbolmultiphylo1)
+
+str(miarbolmultiphylo1)
+
+###
+### Ejercicio 3
+###
+
+tree3<-rtree(10)
+tree4<-rtree(10)
+tree5<-rtree(10)
+
+summary(tree3)
+summary(tree4)
+summary(tree5)
+
+#Create the files of the trees
+
+write.tree(tree3, file="tree3newi")
+write.tree(tree4, file="tree4newi")
+write.tree(tree5, file="tree5newi")
+
+getwd()
+
+#write the function
+
+createTree<-function(numArboles, NumTerminales){
+  rmtree(numArboles,NumTerminales)->miArbolito;
+  return(miArbolito)}
+
+#Testing the function
+
+createTree(10,10)
+
+#Create a file using the new function
+
+write.tree(createTree(10,10), file= "superArboles")
+
+
+####
+####Ejercicio 4
+####
+
+
+###
+###Ejercicio 5
+###
+
+#####Download the Sequence of GeneBank 
+
+#Download sequence
+
+sequencia1 <- read.GenBank("U15717")
+
+#See the species name after download sequence
+str(sequencia1)
+
+attr(sequencia1,"species")
+
+attr(sequencia1,"length")
+
+#Create the function to download simultaneous sequences
+
+Downloadseq<-function(acceso){
+  
+  accesso<-read.GenBank(acceso)
+  
+  name<- attr(accesso,"species")
+  
+  return(name)
+  }
+
+code<-c("U15717","U15718","U15719","U15720","U15721","U15722","U15723","U15724")
+Downloadseq(code)
