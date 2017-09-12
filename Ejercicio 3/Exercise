@@ -171,8 +171,77 @@ Downloadseq<-function(acceso){
   
   name<- attr(accesso,"species")
   
-  return(name)
-  }
+  return(name)}
 
-code<-c("U15717","U15718","U15719","U15720","U15721","U15722","U15723","U15724")
-Downloadseq(code)
+code<-paste("U157", 17:24, sep="" )
+
+misdaticos->read.GenBank(code)
+
+str(misdaticos)
+
+
+#Print the length sequence of each list
+
+length(misdaticos [[1]])
+
+?lapply
+
+lapply(misdaticos, length)
+
+##Put all data in a matriz
+
+as.alignment(misdaticos)->miPseudoaling
+
+str(miPseudoaling)
+
+print(miPseudoaling)
+
+miPseudoaling$seq -> sequencia
+
+str(miPseudoaling$seq) #Mirar la estructura de la $seq, $nm, etc...
+
+write.nexus(miPseudoaling) #No funciona
+
+write.dna(misdaticos, file = "misdaticos", format= "fasta") #It works!!!!
+
+#Convertir misdaticos a as.chr
+
+miPseudoChar<-as.character(misdaticos)
+
+str(miPseudoChar)
+
+str(miPseudoChar$U15719 [[3]])
+
+miPseudoChar$U15719 [[1]]
+
+pseudoMatrix<-as.matrix(miPseudoChar)
+
+str(pseudoMatrix)
+
+pseudoDataF<-as.data.frame(miPseudoChar)
+
+str(pseudoDataF)
+
+#Extract the Bases of the sequence
+
+?seq
+
+seq(1, 1045, by=3)->by1
+seq(2, 1045, by=3)->by2
+seq(3, 1045, by=3)->by3
+
+newS1<-pseudoDataF[by1,]
+
+newS2<-pseudoDataF[by2,]
+
+newS3<-pseudoDataF[by3,]
+
+
+write.dna(newS1, file = "secuenciax1", format = "fasta")
+
+write.dna(newS2, file = "secuenciax2", format = "fasta")
+
+write.dna(newS3, file = "secuenciax3", format = "fasta")
+
+
+##FIN!!!!
